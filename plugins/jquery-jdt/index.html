@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>jQuery轻量级圆形进度指示器插件</title>
+	<link rel="stylesheet" type="text/css" href="css/default.css">
+	<link href="css/base.css"  rel="stylesheet" type="text/css" />
+	<link href="css/project_base.css"  rel="stylesheet" type="text/css" />
+    <link href="css/radialindicator.css"  rel="stylesheet" type="text/css" />
+    <style type="text/css">
+		.htmleaf-icon{color: #fff;}
+    </style>
+	<!--[if IE]>
+		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="htmleaf-container">
+		<header class="htmleaf-header bgcolor-12">
+			<h1>jQuery轻量级圆形进度指示器插件 <span>A simple and light weight circular indicator plugin</span></h1>			
+		</header>
+		
+		<div id="bodyContent">
+       		 <div class="wrapper">
+
+    <div id="sideContent">
+        <div id="intro">
+            <h2 class="experiment-title">
+        radialIndicator
+      </h2>
+            <p>
+                radialIndicator is a simple and light weight circular indicator plugin. It supports color range, interpolation, formatting, percentage value and much more, and is easy to configure and update after initialization. And it do work well with jQuery and angular js .
+            </p>
+            <h3>How to use?</h3>
+            Include jquery [optional] and radialIndicator.js.
+            <pre class="brush: xml;">
+    &lt;script src=&quot;radialIndicator.js&quot;&gt;&lt;/script&gt;
+</pre>
+            
+        </div>
+        <div id="example">
+            A simple initialization.
+            <div class="prg-cont rad-prg" id="indicatorContainer"></div>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator();
+    </pre>
+            <p>
+                In this first argument is configuration parameters [Optional], Lets see a example with configuration.
+            </p>
+            <div class="prg-cont rad-prg" id="indicatorContainer2"></div>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator({
+                barColor: '#87CEEB',
+                barWidth: 10,
+                initValue: 40,
+                roundCorner : true,
+                percentage: true
+            });
+    </pre>
+            Getting instance of radial Progress
+            <pre class="brush: js;">
+        var radialObj = $('#indicatorContainer').data('radialIndicator');
+        //now you can use instance to call different method on the radial progress.
+        //like
+        radialObj.animate(60);
+    </pre>
+
+            <h3>What if you don't use jQuery</h3>
+            Radial Progress work standalone too.
+            <pre class="brush: js;">
+        //Intialiazation 
+        var radialObj = radialIndicator('#indicatorContainer', {
+            barColor : '#87CEEB',
+            barWidth : 10,
+            initValue : 40
+        }); 
+
+        //Using Instance
+        radialObj.animate(60); 
+    </pre>
+            <p>
+                In this way first argument is a selector string or dom node or node list (Even you pass a node list it takes the first node only). Function returns a instance so you can use it call different methods same as shown in jquery example.
+                <br/>You can use any one of the following way as per your convinient.
+            </p>
+
+            <h3>A radialIndicator without number idicator</h3>
+            <div class="prg-cont rad-prg" id="indicatorContainer3"></div>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator({
+            displayNumber: false
+        });
+
+    </pre>
+
+            <h3>Providing a color range</h3>
+            <p>
+                You can provide a color range for different points, and if interpolate option is true radialIndicator will interpolate color between two points else it will take the upper limit color of the points.
+            </p>
+            <div class="prg-cont rad-prg" id="indicatorContainer4"></div>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator({
+            barColor: {
+                0: '#FF0000',
+                33: '#FFFF00',
+                66: '#0066FF',
+                100: '#33CC33'
+            },
+            percentage: true
+        });
+
+    </pre>
+
+            <h3>Providing minimum value and maximum value</h3>
+            <p>
+                You can provide a minimum and maximum value to display the indicator as per required .
+            </p>
+            <div class="prg-cont rad-prg" id="indicatorContainer7"></div>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator({
+            minValue: 1000,
+            maxValue: 100000
+        });
+    </pre>
+
+            <h3>Formating a indicator</h3>
+            <p>
+                You can provide a # formatter or a formatter function to format indicator.
+            </p>
+            <div class="prg-cont rad-prg" id="indicatorContainer8"></div>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator({
+            radius: 70,
+            minValue: 10000,
+            maxValue: 10000000,
+            format: '$ ##,##,###'
+        });
+
+    </pre>
+
+            <h3>Having logo / different element inside the radial inside radialIndicator</h3>
+            <p>
+                This we can easily achieve with normal html css. Here is an example
+            </p>
+            <div class="prg-cont" id="indicatorContainerWrap5">
+                <div class="rad-prg" id="indicatorContainer5"></div>
+                <img src="picture/lab_exp.png" id="prgLogo" />
+            </div>
+            <h4>HTML</h4>
+            <pre class="brush: xml;">
+        &lt;div id=&quot;indicatorContainerWrap&quot;&gt;
+            &lt;div id=&quot;indicatorContainer&quot;&gt;&lt;/div&gt;
+            &lt;img src=&quot;picture/lab_exp.png&quot;  id=&quot;prgLogo&quot;/&gt;
+        &lt;/div&gt;
+    </pre>
+            <h4>CSS</h4>
+            <pre class="brush: css;">
+        #indicatorContainerWrap,#indicatorContainer{
+            display:inline-block;
+            position:relative;
+        }
+        #prgLogo{
+            position:absolute;
+            width:60px;
+            height:60px;
+            margin-top:-30px;
+            margin-left:-30px;
+        }
+    </pre>
+
+            <h4>JS</h4>
+            <pre class="brush: js;">
+        $('#indicatorContainer').radialIndicator({value : 90});
+    </pre>
+
+            <h3>A clock example</h3>
+            <p>
+                A simple clock using radial indicator.
+            </p>
+            <div class="rad-prg" id="indicatorContainer9"></div>
+            <pre class="brush: js;">
+                var radialObj = radialIndicator('#indicatorContainer', {
+                    radius: 60,
+                    barWidth: 5,
+                    barColor: '#FF0000',
+                    minValue: 0,
+                    maxValue: 60,
+                    fontWeight: 'normal',
+                    roundCorner: true,
+                    format: function (value) {
+                        var date = new Date();
+                        return date.getHours() + ':' + date.getMinutes();
+                    }
+                });
+
+                setInterval(function () {
+                    radialObj.value(new Date().getSeconds() + 1);
+                }, 1000);
+
+
+    </pre>
+
+
+            <h3>A file upload example</h3>
+            <div id="indicatorContainerWrap6">
+                <div class="rad-prg" id="indicatorContainer6"></div>
+                <div class="rad-cntnt">Click / Drop file to select.</div>
+                <input type="file" id="prgFileSelector" />
+            </div>
+            <h4>HTML</h4>
+            <pre class="brush: xml;">
+                &lt;div id=&quot;indicatorContainerWrap&quot;&gt;
+                    &lt;div class=&quot;rad-prg&quot; id=&quot;indicatorContainer&quot;&gt;&lt;/div&gt;
+                    &lt;div class=&quot;rad-cntnt&quot;&gt;Click / Drop file to select.&lt;/div&gt;
+                    &lt;input type=&quot;file&quot; id=&quot;prgFileSelector&quot; /&gt;
+                &lt;/div&gt;                
+            </pre>
+
+            <h4>CSS</h4>
+            <pre class="brush: css;">
+                    #indicatorContainerWrap{
+                        position: relative;
+                        display: inline-block;
+                    }
+
+                    .rad-cntnt{
+                        position: absolute;
+                        display: table;
+                        vertical-align: middle;
+                        text-align: center;
+                        width: 100%;
+                        top:50%;
+                        -webkit-transform: translateY(-50%);
+                        -moz-transform: translateY(-50%);
+                        -ms-transform: translateY(-50%);
+                        -o-transform: translateY(-50%);
+                        transform: translateY(-50%);
+                        font-size:20px;
+                        line-height: 24px;
+                    }
+
+
+                    #prgFileSelector{
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        opacity: 0;
+                        top:0;
+                        left:0;
+                        z-index: 10;
+                    }
+              </pre>
+            <h4>JS</h4>
+            <pre class="brush: js;">
+                //file upload example
+                var container = $('#indicatorContainerWrap'),
+                    msgHolder = container.find('.rad-cntnt'),
+                    containerProg = container.radialIndicator({
+                        radius: 100,
+                        percentage: true,
+                        displayNumber: false
+                    }).data('radialIndicator');
+
+
+                container.on({
+                    'dragenter': function (e) {
+                        msgHolder.html("Drop here");
+                    },
+                    'dragleave': function (e) {
+                        msgHolder.html("Click / Drop file to select.");
+                    },
+                    'drop': function (e) {
+                        e.preventDefault();
+                        handleFileUpload(e.originalEvent.dataTransfer.files);
+                    }
+                });
+
+                $('#prgFileSelector').on('change', function () {
+                    handleFileUpload(this.files);
+                });
+
+                function handleFileUpload(files) {
+                    msgHolder.hide();
+                    containerProg.option('displayNumber', true);
+
+                    var file = files[0],
+                        fd = new FormData();
+
+                    fd.append('file', file);
+
+
+                    $.ajax({
+                        url: 'service/upload.php',
+                        type: 'POST',
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: function () {
+                            containerProg.option('displayNumber', false);
+                            msgHolder.show().html('File upload done.');
+                        },
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            //Upload progress
+                            xhr.upload.addEventListener("progress", function (e) {
+                                if (e.lengthComputable) {
+                                    var percentComplete = (e.loaded || e.position) * 100 / e.total;
+                                    //Do something with upload progress
+                                    console.log(percentComplete);
+                                    containerProg.animate(percentComplete);
+                                }
+                            }, false);
+
+                            return xhr;
+                        }
+                    });
+
+                }
+                
+              </pre>
+        </div>
+    </div>
+		
+	
+	
+	<div id="status-msg"></div>
+    <script type="text/javascript"  src="http://libs.useso.com/js/jquery/1.8.1/jquery.min.js"></script>
+	<script type="text/javascript"  src="js/base.js"></script>
+	<script type="text/javascript"  src="js/project_base.js"></script>	
+    <script>
+        	SyntaxHighlighter.defaults['toolbar'] = false;
+			SyntaxHighlighter.all();
+    </script>
+
+    <script src="js/radialindicator.js"></script>
+    <script src="js/demo.js"></script>
+</body>
+</html>
